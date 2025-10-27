@@ -4,7 +4,7 @@ import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import { SessionStatus } from "@/app/types";
 import { useRealtimeSession } from "@/app/hooks/useRealtimeSession";
-import { RealtimeAgent, tool } from "@openai/agents/realtime";
+import { RealtimeAgent } from "@openai/agents/realtime";
 import { TranscriptProvider } from "@/app/contexts/TranscriptContext";
 import { v4 as uuidv4 } from "uuid";
 import { EventProvider, useEvent } from "@/app/contexts/EventContext";
@@ -20,7 +20,6 @@ function ThSwitchboardDemo() {
     "prompt" | "granted" | "denied" | "checking"
   >("checking");
   const [error, setError] = useState<string | null>(null);
-  const pendingDisconnectRef = useRef(false);
   const sessionStatusRef = useRef<SessionStatus>("DISCONNECTED");
 
   useEffect(() => {

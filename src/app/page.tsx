@@ -4,12 +4,13 @@ import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import { SessionStatus } from "@/app/types";
 import { useRealtimeSession } from "@/app/hooks/useRealtimeSession";
-import { RealtimeAgent } from "@openai/agents/realtime";
+import { RealtimeAgent, tool } from "@openai/agents/realtime";
 import { TranscriptProvider } from "@/app/contexts/TranscriptContext";
 import { v4 as uuidv4 } from "uuid";
 import { EventProvider, useEvent } from "@/app/contexts/EventContext";
 import { FiPhoneCall } from "react-icons/fi";
 import { FiPhone } from "react-icons/fi";
+import { thAgentInstructions } from "./agentConfigs/thSwitchboard/thAgentInstructions";
 
 function ThSwitchboardDemo() {
   const audioElementRef = useRef<HTMLAudioElement | null>(null);
@@ -19,6 +20,12 @@ function ThSwitchboardDemo() {
     "prompt" | "granted" | "denied" | "checking"
   >("checking");
   const [error, setError] = useState<string | null>(null);
+  const pendingDisconnectRef = useRef(false);
+  const sessionStatusRef = useRef<SessionStatus>("DISCONNECTED");
+
+  useEffect(() => {
+    sessionStatusRef.current = sessionStatus;
+  }, [sessionStatus]);
 
   const { logClientEvent, logServerEvent } = useEvent();
 
@@ -162,8 +169,7 @@ function ThSwitchboardDemo() {
       const switchboardAgent = new RealtimeAgent({
         name: "TH switchboard service",
         voice: "sage",
-        instructions:
-          "You are a switchboard operator for TH Resort, that first of all answers in italian and greet customer.",
+        instructions: thAgentInstructions,
       });
 
       await connect({

@@ -3,8 +3,11 @@ import "./globals.css";
 import "./lib/envSetup";
 
 export const metadata: Metadata = {
-  title: "Realtime API Agents",
-  description: "A demo app from OpenAI.",
+  title: "Centralino TH",
+  description: "TH AI switchboard demo.",
+  icons: {
+    icon: "/Logo_TH_Resorts_-_short_neg.ico",
+  },
 };
 
 export default function RootLayout({

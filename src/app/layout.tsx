@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: "Centralino TH",
   description: "TH AI switchboard demo.",
   icons: {
-    icon: "/Logo_TH_Resorts_-_short_neg.ico",
+    icon: "/Logo_TH_Resorts_-_short_pos.ico",
   },
 };
 
